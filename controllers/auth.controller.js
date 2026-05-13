@@ -65,9 +65,12 @@ exports.loginUser = asyncHandler(async (req,res) => {
         }
     )
 
+    
+
+    res.cookie("token",token);
+
     res.status(200).json({
-        success :true,
-        token
+        message : "Login successful"
     });
 
 

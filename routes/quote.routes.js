@@ -5,7 +5,7 @@ const upload = require("../middlewares/uploadMiddleware");
 const router = express.Router();
 
 router.post("/create",authMiddleware ,upload.single("image"), createQuote);
-router.get("/",getQuotes);
+router.get("/", getQuotes);
 router.delete("/:id",authMiddleware , deleteQuote)
 
 

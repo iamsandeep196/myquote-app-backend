@@ -3,18 +3,22 @@ const asyncHandler = require("../utils/asyncHandler");
 
 
 const authMiddleware = asyncHandler(async (req,res,next) => {
-    
-    const token = req.headers.authorization;
+
+    const token = req.cookies.token;
 
     if(!token) {
         throw new Error(
             "Token missing"
         );
     };
-    const jwtToken = token.split(" ")[1];
 
-    const decoded = jwt.verify(jwtToken,process.env.SECRET_KEY);
+
+
+    const decoded = jwt.verify(token,process.env.SECRET_KEY);
+    
     req.userId = decoded.id;
+
+
     next();
 });
 

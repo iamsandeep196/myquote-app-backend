@@ -35,14 +35,18 @@ exports.createQuote = asyncHandler(async (req,res) => {
 
 // GET ALL QUOTES
 exports.getQuotes = asyncHandler(async (req,res) => {
-    const quotes = await Quote.find().populate("userId","name profilePic")
+
+    // console.log(req.userId.id);
+    
+
+    const quotes = await Quote.find().populate("userId", "name email profilePic")
     .sort({
         createdAt : -1
     });
 
     res.status(200).json({
         success : true,
-        data : quote
+        data : quotes
     })
 });
 
