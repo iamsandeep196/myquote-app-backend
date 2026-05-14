@@ -74,3 +74,21 @@ exports.deleteQuote = asyncHandler(async (req,res) => {
         message : "Quote deleted"
     })
 })
+
+exports.getUserQuote = asyncHandler(async (req,res) => {
+    
+    const userQuote = await Quote.findOne({userId:req.userId});
+
+    if(!userQuote){
+        res.status(400);
+        throw new Error(
+            "You have not created any Quote"
+        )
+    }
+
+    res.status(200).json({
+        succes:true,
+        userQuote
+    });
+
+})

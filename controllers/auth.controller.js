@@ -2,10 +2,20 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("../utils/asyncHandler");
+const { registerValidation , loginValidation } = require("../validations/user.validation");
 
 
 // REGISTER USER
 exports.registerUser = asyncHandler( async (req,res) => {
+
+
+    const { error } = registerValidation.validate(req.body);
+    if(error) {
+        return res.status(400).json({
+            success : false,
+            message : error.details[0].message
+        });
+    }
     
     const { name , email , password } = req.body;
 
@@ -34,6 +44,16 @@ exports.registerUser = asyncHandler( async (req,res) => {
 // LOGIN USER 
 
 exports.loginUser = asyncHandler(async (req,res) => {
+
+    const { error } = loginValidation.validate(req.body);
+
+    if(error){
+
+        return res.status(400).json({
+            success:false,
+            message : error.details[0].message
+        });
+    }
     
     const { email , password } = req.body;
 
@@ -75,3 +95,13 @@ exports.loginUser = asyncHandler(async (req,res) => {
 
 
 });
+
+
+exports.userLogout = asyncHandler(async (req,res) => {
+
+    res.clearCookie("token");
+    res.status(200).json({
+        success:true,
+        message:"Logout successfully"
+    });
+})
