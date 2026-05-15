@@ -40,6 +40,14 @@ exports.getQuotes = asyncHandler(async (req,res) => {
     
 
     const quotes = await Quote.find().populate("userId", "name email profilePic")
+    .populate({
+        path : "comments",
+        populate:{
+            path : "userId",
+            select : "name profilePic"
+        }
+
+    })
     .sort({
         createdAt : -1
     });
@@ -78,7 +86,8 @@ exports.deleteQuote = asyncHandler(async (req,res) => {
 exports.getUserQuote = asyncHandler(async (req,res) => {
     
     const userQuotes = await Quote.find({userId:req.userId});
-
+    const totalUserQuotes = await Quote.countDocuments({userId:req.userId});
+    
     if(!userQuotes){
         res.status(400);
         throw new Error(
@@ -88,7 +97,8 @@ exports.getUserQuote = asyncHandler(async (req,res) => {
 
     res.status(200).json({
         succes:true,
-        userQuotes
+        userQuotes,
+        totalUserQuotes
     });
 
 })

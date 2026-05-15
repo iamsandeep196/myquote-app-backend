@@ -2,6 +2,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const  authRoute  = require("./routes/auth.routes");
 const  quoteRoute  = require("./routes/quote.routes");
+const commentRoute = require("./routes/comment.route");
 const  errorMiddleware  = require("./middlewares/errorMiddleware");
 const cookieParser = require("cookie-parser");
 const app = express();
@@ -14,6 +15,7 @@ app.use(cookieParser());
 
 app.use("/api/auth",authRoute);
 app.use("/api/quotes",quoteRoute);
+app.use("/api/comments",commentRoute);
 
 
 
