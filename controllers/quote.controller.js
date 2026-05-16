@@ -37,7 +37,11 @@ exports.createQuote = asyncHandler(async (req,res) => {
 exports.getQuotes = asyncHandler(async (req,res) => {
 
     // console.log(req.userId.id);
-    
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 4;
+
+    // skip
+    const skip = (page - 1) * limit;
 
     const quotes = await Quote.find().populate("userId", "name email profilePic")
     .populate({
@@ -48,9 +52,12 @@ exports.getQuotes = asyncHandler(async (req,res) => {
         }
 
     })
+    .populate("likes","name")
     .sort({
         createdAt : -1
-    });
+    })
+    .skip(skip)
+    .limit(limit);
 
     res.status(200).json({
         success : true,
@@ -83,6 +90,7 @@ exports.deleteQuote = asyncHandler(async (req,res) => {
     })
 })
 
+// GET USER QUOTE
 exports.getUserQuote = asyncHandler(async (req,res) => {
     
     const userQuotes = await Quote.find({userId:req.userId});
@@ -101,4 +109,94 @@ exports.getUserQuote = asyncHandler(async (req,res) => {
         totalUserQuotes
     });
 
-})
+});
+
+// LIKES
+// exports.doLike = asyncHandler(async (req,res) => {
+    
+//     const { id } = req.params;
+
+//     const quote = await Quote.findById(id);
+
+//     if(!quote) {
+//         res.status(400);
+//         throw new Error(
+//             "Quote not found"
+//         )
+//     }
+
+//     if(quote.likes.includes(req.userId)){
+//         const disLike = await Quote.findByIdAndUpdate(id , {
+//             $pull : {
+//                 likes : req.userId
+//             }
+//         });
+
+//         res.status(201).json({
+//             success : true,
+//             message : "You have disliked the Quote",
+//         });
+//     }
+//     else {
+//         res.status(400);
+//         throw new Error(
+//             "You have not liked this quote"
+//         )
+//     }
+
+
+//     const newLike = await Quote.findByIdAndUpdate(id,
+//         {
+//             $push : {
+//                 likes : req.userId
+//             }
+//         }
+//     )
+//     res.status(201).json({
+//         success : true,
+//         message : "you have liked Quote",
+//         likes : newLike
+//     });
+
+    
+// });
+
+// TOGGLE LIKE
+
+exports.toggleLike = asyncHandler(async (req,res) => {
+    
+    const { id } = req.params;
+
+    const quote = await Quote.findById(id);
+
+    if(!quote){
+        res.status(400);
+        throw new Error(
+            "Quote not found"
+        )
+    }
+
+
+// check if already like then do dislike
+    if(quote.likes.includes(req.userId)){
+        quote.likes.pull(req.userId);
+        await quote.save();
+
+        return res.status(200).json({
+            success : true,
+            message : "You have disliked the Quote",
+            likes : quote.likes
+        });
+    }
+    // set to like 
+    quote.likes.addToSet(req.userId);
+    await quote.save();
+
+
+    res.status(200).json({
+        success : true,
+        message : "You have liked the Quote",
+        likes : quote.likes
+    });
+
+});
