@@ -1,5 +1,5 @@
 const express = require("express");
-const { registerUser , loginUser , userLogout , getAllUsers , toggleFollowing } = require("../controllers/auth.controller");
+const { registerUser , loginUser , userLogout , getAllUsers , toggleFollowing , getUserFollowing } = require("../controllers/auth.controller");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
@@ -7,8 +7,9 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout",userLogout);
-router.post("/follow/:id", authMiddleware ,toggleFollowing);
+router.post("/follow/user/:id", authMiddleware ,toggleFollowing);
 router.get("/users",getAllUsers);
+router.get("/following/user/:id",authMiddleware,getUserFollowing);
 
 
 module.exports = router;

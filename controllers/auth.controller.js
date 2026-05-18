@@ -112,7 +112,8 @@ exports.userLogout = asyncHandler(async (req,res) => {
 exports.getAllUsers = asyncHandler(async (req,res) => {
 
 
-    const users = await User.find().select("name email followers");
+    const users = await User.find().select("name email followers").populate("followers","name email")
+    .populate("following","name email");
     if(!users) {
         throw new Error(
             "Their is no users"
@@ -132,6 +133,9 @@ exports.toggleFollowing = asyncHandler(async (req,res) => {
     const { id } = req.params;
     const user = await User.findById(id);
 
+    // current user
+    const currentUser = await User.findById(req.userId);
+
 
     if(!user){
         res.status(400);
@@ -139,10 +143,23 @@ exports.toggleFollowing = asyncHandler(async (req,res) => {
             "User not found"
         );
     }
+
+// check if user try to follow himself
+    if(id === req.userId) {
+        // res.status(400);
+        throw new Error(
+            "You can't follow yourself"
+        )
+    }
+
+
     // check if user has already followed the user then unfollow
-    if(user.followers.includes(req.userId)){
+    if(user.followers.includes(req.userId)){    
+
         user.followers.pull(req.userId);
+        currentUser.following.pull(id);
         await user.save();
+        await currentUser.save();
 
         return res.status(200).json({
             success : true,
@@ -151,9 +168,12 @@ exports.toggleFollowing = asyncHandler(async (req,res) => {
         });
 
     }
+
     // following the user 
     user.followers.addToSet(req.userId);
+    currentUser.following.addToSet(id);
     await user.save();
+    await currentUser.save();
 
     res.status(200).json({
         success : true,
@@ -162,3 +182,21 @@ exports.toggleFollowing = asyncHandler(async (req,res) => {
     });
 
 });
+
+exports.getUserFollowing = asyncHandler(async (req,res) => {
+    
+    const user = await User.findById(req.userId).select("name email following");
+
+
+    if(user.following.length > 0){
+       return res.status(200).json({
+            success : true,
+            message : "you started following the user",
+            user
+        })
+    }
+
+
+      
+
+})
