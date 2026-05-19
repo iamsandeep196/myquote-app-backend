@@ -155,7 +155,7 @@ http://localhost:3000
 
 | Method | Endpoint |
 |---|---|
-| GET | /api/users/auth/search?name=sandeep |
+| GET | /api/auth/users/search?name=sandeep |
 
 ---
 ## 🚧 Project Status
