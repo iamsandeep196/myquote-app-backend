@@ -92,7 +92,7 @@ IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
 Start the development server.
 
 ```bash
-npm run dev
+node app.js
 ```
 
 Server will run on:
