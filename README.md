@@ -1,5 +1,10 @@
-# myquote-app-backend
-Backend API for a quote sharing application built with Node.js, Express, and MongoDB.
+
+# MyQuoteApp Backend
+
+A scalable and feature-rich backend API for a modern quote sharing platform built with Node.js, Express.js, and MongoDB.  
+This backend powers authentication, quote management, comments, likes, follows, image uploads, and secure REST APIs.
+
+Designed with clean architecture, reusable code structure, and real-world backend development practices.
 
 ## Features
 
