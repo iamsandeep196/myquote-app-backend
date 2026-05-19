@@ -185,7 +185,8 @@ exports.toggleFollowing = asyncHandler(async (req,res) => {
 
 exports.getUserFollowing = asyncHandler(async (req,res) => {
     
-    const user = await User.findById(req.userId).select("name email following");
+    const user = await User.findById(req.userId).select("name email following")
+    .populate("following", "name email");
 
 
     if(user.following.length > 0){
@@ -196,7 +197,47 @@ exports.getUserFollowing = asyncHandler(async (req,res) => {
         })
     }
 
+    if(user.following.length === 0){
+        console.log(user.following.length);
 
-      
+        return res.status(200).json({
+            success:true,
+            message:"you are not following any one"
+        })
+    }
 
-})
+    user.following.pull(req.userId);
+    await user.save();
+
+    res.status(200).json({
+        success : true,
+        user
+    });   
+
+});
+
+exports.searchUser = asyncHandler(async (req,res) => {
+
+    const keyword = req.query.name;
+
+    const user = await User.find({
+        name : {
+            $regex : `^${keyword}`,
+            $options :"i"
+        }
+    }).select("-password");
+
+    if(!user) {
+        res.status(400).json({
+            success : false,
+            message : "User not found",
+        });
+    }
+
+    res.status(200).json({
+        success : true,
+        message : "All users",
+        user
+    });
+
+});
