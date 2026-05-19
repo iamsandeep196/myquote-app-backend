@@ -158,6 +158,11 @@ http://localhost:3000
 | GET | /api/users/search?name=sandeep |
 
 ---
+## 🚧 Project Status
+
+This project is actively under development.  
+New features, optimizations, and improvements are being added regularly.
+
 
 ## 👨‍💻 Author
 
