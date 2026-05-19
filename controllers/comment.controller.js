@@ -44,14 +44,31 @@ exports.deleteComment = asyncHandler(async (req,res) => {
 
     const { commentId } = req.params;
     
-    const userComment = await Comment.findByIdAndDelete(commentId);
+    const userComment = await Comment.findById(commentId);
 
     if(!userComment){
         res.status(400);
         throw new Error(
-            "There is no comments on this Quote"
+            "comment not found"
         )
     }
+
+
+    // check ownership 
+    if(userComment.userId.toString() !== req.userId.toString()){
+        res.status(403);
+        throw new Error (
+            "Unauthorized"
+        )
+    }
+    await Quote.findByIdAndUpdate(userComment.quoteId,{
+        $pull : {
+            comments : userComment._id
+        }
+    });
+// deleted comment
+    await Comment.findByIdAndDelete(commentId);
+
 
     res.status(200).json({
         success:true,
