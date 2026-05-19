@@ -37,4 +37,23 @@ Designed with clean architecture, reusable code structure, and real-world backen
 - 🔧 **Git & GitHub** — Distributed version control and project collaboration tools
 
 
+## 📂 Folder Structure
+
+```bash
+backend/
+│
+├── controllers/     # Business logic and controllers
+├── models/          # Database schemas and models
+├── routes/          # API route definitions
+├── middlewares/     # Custom middleware functions
+├── validations/     # Request validation schemas
+├── utils/           # Utility/helper functions
+├── config/          # Database and third-party configurations
+├── .env             # Environment variables
+├── app.js           # Express app configurat  
+├── package.json     # Project metadata and dependencies
+└── package-lock.json
+```
+
+
 
