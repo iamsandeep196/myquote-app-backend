@@ -55,5 +55,113 @@ backend/
 └── package-lock.json
 ```
 
+## ⚙️ Installation
+
+Clone the repository and install all dependencies.
+
+```bash
+git clone <your-repository-url>
+
+cd backend
+
+npm install
+```
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file in the root directory and add the following environment variables.
+
+```env
+PORT=5000
+
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_jwt_secret_key
+
+IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
+IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
+```
+
+---
+
+## Run Locally
+
+Start the development server.
+
+```bash
+npm run dev
+```
+
+Server will run on:
+
+```bash
+http://localhost:3000
+```
+
+---
+
+## 📡 API Endpoints
+
+### 🔐 Authentication Routes
+
+| Method | Endpoint |
+|---|---|
+| POST | /api/auth/register |
+| POST | /api/auth/login |
+| GET | /api/auth/user |
+
+---
+
+### 📝 Quote Routes
+
+| Method | Endpoint |
+|---|---|
+| POST | /api/create |
+| GET | /api/quotes |
+| GET | /api/quotes/:id |
+| DELETE | /api/quotes/:id |
+
+---
+
+### 💬 Comment Routes
+
+| Method | Endpoint |
+|---|---|
+| POST | /api/comments/:quoteId |
+| DELETE | /api/comments/:commentId |
+
+---
+
+### ❤️ Toggle Like Routes
+
+| Method | Endpoint |
+|---|---|
+| POST | /api/quotes/:id/like |
+
+---
+
+### 👥 Toggle Follow Routes
+
+| Method | Endpoint |
+|---|---|
+| POST | /api/users/:id/follow |
+
+---
+
+### 🔍 Search User Route
+
+| Method | Endpoint |
+|---|---|
+| GET | /api/users/search?name=sandeep |
+
+---
+
+## 👨‍💻 Author
+
+Developed with ❤️ by Sandeep Bharati
+
 
 
