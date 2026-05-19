@@ -60,9 +60,9 @@ backend/
 Clone the repository and install all dependencies.
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/iamsandeep196/myquote-app-backend.git
 
-cd backend
+cd myquote-app-backend
 
 npm install
 ```
