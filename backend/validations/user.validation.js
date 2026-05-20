@@ -1,5 +1,7 @@
 const joi = require("joi");
 
+
+// validations
 const registerValidation = joi.object({
     
     name : joi.string().min(2).max(20).required().messages({
