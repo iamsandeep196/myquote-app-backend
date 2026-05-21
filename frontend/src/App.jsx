@@ -1,13 +1,22 @@
 import React from 'react'
 import Hero from './pages/Hero'
-// import Footer from './components/Footer'
+import Signup from './pages/Signup'
+import Footer from './components/Footer'
+import Login from './pages/Login'
+import { Toaster } from "react-hot-toast"
 
 
 function App() {
   return (
+    <>
   
-  
-    <Hero />
+    {/* // <Hero /> */}
+    <Toaster />
+    <Signup />
+    {/* <Login /> */}
+    <Footer />
+    </>
+    
   
 
   
