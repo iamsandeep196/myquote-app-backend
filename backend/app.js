@@ -5,10 +5,12 @@ const  quoteRoute  = require("./routes/quote.routes");
 const commentRoute = require("./routes/comment.routes");
 const  errorMiddleware  = require("./middlewares/errorMiddleware");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const app = express();
 connectDB();
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 
 

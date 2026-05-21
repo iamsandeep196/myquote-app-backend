@@ -34,10 +34,17 @@ exports.registerUser = asyncHandler( async (req,res) => {
         password:hashPassword
     });
 
+    const userData = {
+        _id : user._id,
+        name : user.name,
+        email : user.email,
+        followers : user.followers
+    };
+
     res.status(201).json({
         success : true,
-        message : "User registered",
-        user
+        message : "User registered successfully",
+        user : userData
     });
 });
 
