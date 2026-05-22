@@ -63,6 +63,7 @@ exports.loginUser = asyncHandler(async (req,res) => {
     }
     
     const { email , password } = req.body;
+    
 
     const user = await User.findOne({email});
     
@@ -97,6 +98,7 @@ exports.loginUser = asyncHandler(async (req,res) => {
     res.cookie("token",token);
 
     res.status(200).json({
+        success : true,
         message : "Login successful"
     });
 
