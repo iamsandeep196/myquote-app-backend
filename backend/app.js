@@ -10,6 +10,7 @@ const app = express();
 connectDB();
 app.use(express.json());
 app.use(cookieParser());
+const PORT = process.env.PORT || 5000;
 
 app.use(cors({
     origin : "http://localhost:5173",
