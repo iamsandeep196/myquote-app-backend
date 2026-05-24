@@ -36,33 +36,72 @@ exports.createQuote = asyncHandler(async (req,res) => {
 // GET ALL QUOTES
 exports.getQuotes = asyncHandler(async (req,res) => {
 
-    // console.log(req.userId.id);
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 4;
 
-    // skip
-    const skip = (page - 1) * limit;
-
-    const quotes = await Quote.find().populate("userId", "name email profilePic")
+     const quotes = await Quote.find()
+    .populate("userId", "name email followers following profilePic")
     .populate({
         path : "comments",
         populate:{
             path : "userId",
             select : "name profilePic"
         }
-
     })
     .populate("likes","name")
     .sort({
         createdAt : -1
-    })
-    .skip(skip)
-    .limit(limit);
+    });
+
+    const updatedQuotes = quotes.map((quote) => {
+
+        const isFollowing = quote.userId.followers.some(
+            (f) => f.toString() === req.userId
+        );
+
+        return {
+            ...quote._doc,
+
+            userId : {
+                ...quote.userId._doc,
+                isFollowing
+            }
+        };
+    });
 
     res.status(200).json({
         success : true,
-        data : quotes
-    })
+        data : updatedQuotes
+    });
+// });
+
+    // console.log(req.userId.id);
+    // const page = Number(req.query.page) || 1;
+    // const limit = Number(req.query.limit) || 4;
+
+    // skip
+    // const skip = (page - 1) * limit;
+
+    // const quotes = await Quote.find().populate("userId", "name email followers following profilePic")
+    // .populate({
+    //     path : "comments",
+    //     populate:{
+    //         path : "userId",
+    //         select : "name profilePic"
+    //     }
+
+    // })
+    // .populate("likes","name")
+    // .sort({
+    //     createdAt : -1
+    // });
+    // // .skip(skip)
+    // // .limit(limit);
+
+
+
+    // res.status(200).json({
+    //     success : true,
+    //     data : quotes
+    // })
 });
 
 // DELETE QUOTE

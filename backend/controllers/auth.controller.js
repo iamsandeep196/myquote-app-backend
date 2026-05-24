@@ -121,7 +121,7 @@ exports.userLogout = asyncHandler(async (req,res) => {
 exports.getAllUsers = asyncHandler(async (req,res) => {
 
 
-    const users = await User.find().select("name email followers").populate("followers","name email")
+    const users = await User.find().select("name email isFollowing followers").populate("followers","name email")
     .populate("following","name email");
     if(!users) {
         throw new Error(
@@ -137,58 +137,62 @@ exports.getAllUsers = asyncHandler(async (req,res) => {
 })
 
 exports.toggleFollowing = asyncHandler(async (req,res) => {
-    
-    // userId for whom we want to follow
+
     const { id } = req.params;
+
     const user = await User.findById(id);
 
-    // current user
+    // current logged in user
     const currentUser = await User.findById(req.userId);
 
-
     if(!user){
+        res.status(404);
+        throw new Error("User not found");
+    }
+
+    // prevent self follow
+    if(id === req.userId.toString()){
         res.status(400);
-        throw new Error(
-            "User not found"
-        );
+        throw new Error("You can't follow yourself");
     }
 
-// check if user try to follow himself
-    if(id === req.userId) {
-        // res.status(400);
-        throw new Error(
-            "You can't follow yourself"
-        )
-    }
+    // check already following
+    const isAlreadyFollowing = user.followers.some(
+        (f) => f.toString() === req.userId.toString()
+    );
 
-
-    // check if user has already followed the user then unfollow
-    if(user.followers.includes(req.userId)){    
+    // UNFOLLOW
+    if(isAlreadyFollowing){
 
         user.followers.pull(req.userId);
         currentUser.following.pull(id);
+
         await user.save();
         await currentUser.save();
 
         return res.status(200).json({
             success : true,
             message : "You have unfollowed the user",
-            followers : user.followers
+            followers : user.followers,
+            isFollowing : false
         });
-
     }
 
-    // following the user 
+    // FOLLOW
     user.followers.addToSet(req.userId);
     currentUser.following.addToSet(id);
+
     await user.save();
     await currentUser.save();
 
-    res.status(200).json({
+    return res.status(200).json({
         success : true,
-        message : "you have followed the user",
-        follower : user.followers
+        message : "You have started following the user",
+        followers : user.followers,
+        isFollowing : true
     });
+    
+   
 
 });
 
