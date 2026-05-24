@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import QuoteCard from "../components/QuoteCard";
 import Navbar from "../components/Navbar";
-import BASE_URL from "../utils/baseUrl";
 
 function Quotes() {
   const [quotes, setQuotes] = useState([]);
 
   const fetchQuotes = async () => {
     const response = await fetch(
-      `https://myquote-app-backend.onrender.com/api/quotes/getAllQuotes`,
+      "https://myquote-app-backend.onrender.com/api/quotes/getAllQuotes",
       {
         credentials : "include"
       }
