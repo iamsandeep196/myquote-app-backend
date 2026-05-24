@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa"
 import toast from "react-hot-toast";
 import Footer from "../components/Footer";
-import BASE_URL from "../utils/baseUrl";
 
 function Login() {
 
@@ -27,7 +26,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://myquote-app-backend.onrender.com/api/auth/login", {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

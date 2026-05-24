@@ -7,7 +7,7 @@ function Quotes() {
 
   const fetchQuotes = async () => {
     const response = await fetch(
-      "https://myquote-app-backend.onrender.com/api/quotes/getAllQuotes",
+      "http://localhost:3000/api/quotes/getAllQuotes",
       {
         credentials : "include"
       }

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FaComment } from "react-icons/fa";
-import BASE_URL from "../utils/baseUrl";
 import toast from "react-hot-toast";
 
 function QuoteCard({ quote }) {
@@ -45,7 +44,7 @@ useEffect(() => {
 
         try {
 
-            const response = await fetch(`${BASE_URL}/api/auth/follow/user/${userId}`,
+            const response = await fetch("http://localhost:3000/api/auth/follow/user/${userId}",
 
                 {
                     method:"POST",

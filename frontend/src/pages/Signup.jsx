@@ -4,7 +4,6 @@ import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import Footer from "../components/Footer";
-import BASE_URL from "../utils/baseUrl";
 
 function Signup() {
 
@@ -28,7 +27,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://myquote-app-backend.onrender.com/api/auth/register", {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
 
         headers: {
