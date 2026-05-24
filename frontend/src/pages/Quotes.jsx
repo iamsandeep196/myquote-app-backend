@@ -8,7 +8,7 @@ function Quotes() {
 
   const fetchQuotes = async () => {
     const response = await fetch(
-      `${BASE_URL}/api/quotes/getAllQuotes`,
+      `https://myquote-app-backend.onrender.com/api/quotes/getAllQuotes`,
       {
         credentials : "include"
       }
