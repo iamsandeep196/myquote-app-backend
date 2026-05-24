@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import Footer from "../components/Footer";
+import BASE_URL from "../utils/baseUrl";
 
 function Signup() {
+
+  const navigate = useNavigate();
+
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,7 +28,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch(`${BASE_URL}/api/auth/register`, {
         method: "POST",
 
         headers: {
@@ -42,7 +48,9 @@ function Signup() {
           name: "",
           email: "",
           password: "",
-        });
+        }); 
+
+        navigate("/login");
       } else {
         toast.error(data.message);
       }

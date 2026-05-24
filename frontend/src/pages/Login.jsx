@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa"
 import toast from "react-hot-toast";
 import Footer from "../components/Footer";
+import BASE_URL from "../utils/baseUrl";
 
 function Login() {
+
+  const navigate = useNavigate()
+
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,7 +27,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
+      const response = await fetch(`${BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,12 +42,13 @@ function Login() {
       if (data.success) {
         toast.success(data.message);
 
-  
-
         setFormData({
           email: "",
           password: "",
+
         });
+
+        navigate("/quotes");
       } else {
         toast.error(data.message);
       }
