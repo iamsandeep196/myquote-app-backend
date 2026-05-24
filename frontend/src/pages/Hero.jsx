@@ -1,9 +1,12 @@
 import React from "react";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 function Hero() {
   return (
     <>
+    <Navbar/>
+      
       <div
         data-theme="forest"
         className="min-h-screen bg-base-200 text-base-content p-10"

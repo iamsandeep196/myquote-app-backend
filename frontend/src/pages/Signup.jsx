@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import Footer from "../components/Footer";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -53,13 +54,14 @@ function Signup() {
   }
 
   return (
+    <>
     <div
       data-theme="forest"
       className="min-h-screen bg-base-200 text-base-content p-10 flex flex-col items-center justify-center"
     >
-      <h1 className="text-5xl font-bold">Signup</h1>
+      <h1 className="text-5xl font-extrabold text-base-content">Signup</h1>
 
-      <p className="text-base-content/70 text-sm mt-3">
+      <p className="text-base-content/70 text-sm mt-3 font-light opacity-50">
         Create your account to start sharing quotes.
       </p>
 
@@ -108,6 +110,8 @@ function Signup() {
         Developed by<FaHeart />Sandeep Bharati
       </p>
     </div>
+    <Footer/>
+    </>
   );
 }
 

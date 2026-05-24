@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa"
 import toast from "react-hot-toast";
+import Footer from "../components/Footer";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -35,6 +36,8 @@ function Login() {
       if (data.success) {
         toast.success(data.message);
 
+  
+
         setFormData({
           email: "",
           password: "",
@@ -48,6 +51,7 @@ function Login() {
   }
 
   return (
+    <>
     <div
       data-theme="forest"
       className="min-h-screen bg-base-200 text-base-content p-10 flex flex-col items-center justify-center"
@@ -55,10 +59,10 @@ function Login() {
       <h1 className="text-5xl font-bold">Login</h1>
 
       <p className="text-base-content/70 text-sm mt-3">
-        "A place where words feel alive"
+        A place where words feel alive
       </p>
 
-      <div className="flex flex-col gap-5 p-5 w-80">
+      <div className="flex flex-col gap-5 p-5 w-80 mt-5">
         <input
           type="email"
           name="email"
@@ -87,6 +91,8 @@ function Login() {
               Developed by<FaHeart />Sandeep Bharati
             </p>
     </div>
+    <Footer/>
+    </>
   );
 }
 
