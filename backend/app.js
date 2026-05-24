@@ -13,7 +13,7 @@ app.use(cookieParser());
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-    origin :"https://myquote-app-backend.onrender.com",
+    origin :"https://myquote-app-backend.vercel.app",
 
     credentials : true,
 }));
