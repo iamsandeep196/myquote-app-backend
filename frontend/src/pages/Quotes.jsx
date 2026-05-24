@@ -6,8 +6,7 @@ function Quotes() {
   const [quotes, setQuotes] = useState([]);
 
   const fetchQuotes = async () => {
-    const response = await fetch(
-      "http://localhost:3000/api/quotes/getAllQuotes",
+    const response = await fetch("https://myquote-app-backend.onrender.com/api/quotes/getAllQuotes",
       {
         credentials : "include"
       }

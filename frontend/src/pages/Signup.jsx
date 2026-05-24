@@ -27,7 +27,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch("https://myquote-app-backend.onrender.com/api/auth/register", {
         method: "POST",
 
         headers: {
