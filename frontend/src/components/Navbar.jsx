@@ -1,6 +1,44 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
+
 
 function Navbar() {
+  const navigate = useNavigate();
+
+
+async function handleLogout(){
+
+  try {
+    const response = await fetch("http://localhost:3000/api/auth/logout",
+      {
+        method:"POST",
+        headers : {
+          "Content-Type":"application/json"
+        },
+        credentials:"include"
+      }
+    )
+
+    const data = await response.json();
+    if(data.success){
+      toast.success(data.message);
+      console.log(data)
+
+      navigate("/login")
+      
+    }
+
+  }
+  catch(error) {
+
+    toast.error(error.data.message);
+
+  }
+}
+
+
   return (
     <>
       <div className="navbar bg-accent shadow-sm sticky top-0 z-50 px-4">
@@ -40,10 +78,6 @@ function Navbar() {
               </li>
 
               <li>
-                <a>Settings</a>
-              </li>
-
-              <li>
                 <a>Logout</a>
               </li>
             </ul>
@@ -74,11 +108,7 @@ function Navbar() {
               </li>
 
               <li>
-                <a>Settings</a>
-              </li>
-
-              <li>
-                <a>Logout</a>
+                <a onClick={handleLogout}>Logout</a>
               </li>
             </ul>
           </div>
