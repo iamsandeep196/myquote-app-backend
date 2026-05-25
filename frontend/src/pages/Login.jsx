@@ -62,7 +62,7 @@ function Login() {
       data-theme="forest"
       className="min-h-screen bg-base-200 text-base-content p-10 flex flex-col items-center justify-center"
     >
-      <h1 className="text-5xl font-bold">Login</h1>
+      <h1 className="text-5xl mt-40 font-bold">Login</h1>
 
       <p className="text-base-content/70 text-sm mt-3">
         A place where words feel alive
