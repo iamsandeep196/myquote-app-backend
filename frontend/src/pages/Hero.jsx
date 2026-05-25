@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 function Hero() {
   return (
@@ -12,7 +13,7 @@ function Hero() {
         {/* Heading */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide text-center">
           MyQuote
-          <p className="mt-4 text-sm sm:text-base md:text-lg font-light tracking-normal text-base-content/80">
+          <p className="mt-2 text-sm sm:text-base md:text-lg font-light tracking-normal text-base-content/80">
             Express what you think...
           </p>
         </h1>
@@ -23,14 +24,15 @@ function Hero() {
         </p>
 
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-10 w-full sm:w-auto items-center">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-20 w-full sm:w-auto items-center">
           <button className="btn btn-neutral w-full sm:w-auto sm:btn-wide text-sm sm:text-base font-semibold tracking-wide rounded-xl shadow-lg">
             Explore Quotes
           </button>
-
+          <Link to="/signup" className="w-full sm:w-auto">
           <button className="btn btn-outline w-full sm:w-auto sm:btn-wide text-sm sm:text-base font-semibold tracking-wide rounded-xl">
             Register
           </button>
+          </Link>
         </div>
       </div>
 
