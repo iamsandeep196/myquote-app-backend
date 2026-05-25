@@ -7,7 +7,7 @@ function Hero() {
     <>
       <div
         data-theme="forest"
-        className="min-h-screen flex flex-col items-center justify-center bg-base-200 text-base-content px-4 sm:px-6"
+        className="min-h-screen flex flex-col items-center bg-base-200 text-base-content px-4 sm:px-6 pt-24 sm:pt-28"
       >
         {/* Heading */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide text-center">
@@ -33,6 +33,8 @@ function Hero() {
           </button>
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }
