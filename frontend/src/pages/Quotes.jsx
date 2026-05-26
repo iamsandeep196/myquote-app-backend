@@ -6,7 +6,7 @@ function Quotes() {
   const [quotes, setQuotes] = useState([]);
 
   const fetchQuotes = async () => {
-    const response = await fetch("https://myquote-app-backend.vercel.app/api/quotes/getAllQuotes",
+    const response = await fetch("http://localhost:3000/api/quotes/getAllQuotes",
       {
         method:"GET",
         headers : {
@@ -17,7 +17,7 @@ function Quotes() {
     );
 
     const data = await response.json();
-    console.log(data.data);
+    console.log(data);
 
     setQuotes(data.data);
   };

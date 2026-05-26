@@ -5,7 +5,6 @@ import Signup from "./pages/Signup";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Quotes from "./pages/Quotes";
-import ProtectedRoute from "./components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 
 function App() {

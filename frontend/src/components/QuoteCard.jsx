@@ -44,7 +44,7 @@ useEffect(() => {
 
         try {
 
-            const response = await fetch(`https://myquote-app-backend.onrender.com/api/auth/follow/user/${userId}`,
+            const response = await fetch(`http://localhost:3000/api/auth/follow/user/${userId}`,
 
                 {
                     method:"POST",
