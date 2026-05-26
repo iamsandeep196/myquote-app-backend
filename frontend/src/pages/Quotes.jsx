@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import QuoteCard from "../components/QuoteCard";
 import Navbar from "../components/Navbar";
+import toast from "react-hot-toast";
 
 function Quotes() {
   const [quotes, setQuotes] = useState([]);
@@ -19,7 +20,9 @@ function Quotes() {
     const data = await response.json();
     console.log(data);
 
+
     setQuotes(data.data);
+
   };
 
   useEffect(() => {
