@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, replace } from 'react-router-dom';
 import Loader from './Loader';
+import toast from "react-hot-toast"
 
 function ProtectedRoute({children}) {
     
@@ -19,8 +20,13 @@ function ProtectedRoute({children}) {
                         credentials: "include",
                     }
                 );
-
+                
+                const data = await response.json();
+                if(!data.success){
+                    toast.error(data.message);
+                }
                 setIsAuth(response.ok);
+            
 
             } catch (error) {
                 console.log(error);
@@ -37,7 +43,8 @@ function ProtectedRoute({children}) {
     }
 
     if (!isAuth) {
-        return <Navigate to="/login" replace />;
+        
+        return  <Navigate to="/login" replace /> 
     }
 
     return children;

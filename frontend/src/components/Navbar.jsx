@@ -38,7 +38,7 @@ async function handleLogout(){
 
   return (
     <>
-      <div className="navbar bg-accent shadow-sm sticky top-0 z-50 px-4">
+      <div className="navbar bg-success shadow-sm sticky top-0 z-50 px-4">
         {/* Left */}
         <div className="flex-1">
           <a className="btn btn-ghost text-xl font-bold">MyQuote</a>
@@ -75,7 +75,7 @@ async function handleLogout(){
               </li>
 
               <li>
-                <a>Logout</a>
+                <a onClick={handleLogout}>Logout</a>
               </li>
             </ul>
           </div>

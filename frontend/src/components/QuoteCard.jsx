@@ -125,6 +125,7 @@ useEffect(() => {
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-5">
             {/* Like */}
+
             <button className="flex items-center gap-2">
               ❤️ 
               <span>{quote.likes.length}</span>

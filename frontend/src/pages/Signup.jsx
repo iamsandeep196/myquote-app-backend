@@ -27,7 +27,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch("https://myquote-app-backend.onrender.com/api/auth/register", {
         method: "POST",
 
         headers: {
@@ -66,7 +66,7 @@ function Signup() {
       data-theme="forest"
       className="min-h-screen bg-base-200 text-base-content p-10 flex flex-col items-center justify-center"
     >
-      <h1 className="text-5xl mt-40 font-extrabold text-base-content">Signup</h1>
+      <h1 className="text-5xl mt-20 font-extrabold text-base-content">Signup</h1>
 
       <p className="text-base-content/70 text-sm mt-3 font-light opacity-50">
         Create your account to start sharing quotes.
