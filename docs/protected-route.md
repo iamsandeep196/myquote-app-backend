@@ -20,13 +20,13 @@ The project helped me learn:
 # Problems Faced & Learnings
 
 
-## Problem what i have faced during in development
+- Problem what i have faced during in development
 
-## 1-problem After logout, pressing browser back button was showing protected pages again.
-## Reason 
+- 1-problem After logout, pressing browser back button was showing protected pages again.
+- Reason 
 - Protected pages were still present in browser history and cache. and i was not cheking user is logged in or not 
 
-## solution 
+- solution 
 - i created protectedRoute.jsx file and i fetched getMe api to check user is logged in or not then
 i called <Quotes/> components inside the protected route in App.jsx file.
 
