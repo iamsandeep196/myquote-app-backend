@@ -9,7 +9,7 @@ const router = express.Router();
 // authRoutes
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post("/logout",userLogout);
+router.post("/logout",authMiddleware,userLogout);
 router.post("/follow/user/:id", authMiddleware ,toggleFollowing);
 router.get("/users",getAllUsers);
 router.get("/following/user/:id",authMiddleware,getUserFollowing);

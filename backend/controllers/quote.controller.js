@@ -2,10 +2,14 @@ const Quote = require("../models/Quote");
 const asyncHandler = require("../utils/asyncHandler");
 const  imageKit  = require("../config/imagekit");
 
+
 // CREATE QUOTE
 exports.createQuote = asyncHandler(async (req,res) => {
     // TEXT 
     const { text } = req.body;
+
+
+    
 
     // IMAGE UPLOAD
     const uploadedImage = await imageKit.upload({
@@ -16,6 +20,7 @@ exports.createQuote = asyncHandler(async (req,res) => {
         req.file.originalname
 
     });
+    
 
 
     // SAVE IN DB
