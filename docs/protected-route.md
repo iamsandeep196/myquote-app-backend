@@ -34,7 +34,7 @@ Implemented a default background image fallback when no image is selected by the
 const bgImage = userBackground || defaultBackground;
 
 
-
+```
 - Problem what i have faced during in development
 
 - 1-problem After logout, pressing browser back button was showing protected pages again.
