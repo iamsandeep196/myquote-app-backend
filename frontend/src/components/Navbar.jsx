@@ -23,7 +23,7 @@ async function handleLogout(){
       toast.success(data.message);
       console.log(data)
 
-      navigate("/login")
+      navigate("/login",{replace:true});
       
     }
 
