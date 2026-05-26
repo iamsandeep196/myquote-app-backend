@@ -11,7 +11,7 @@ function Navbar() {
 async function handleLogout(){
 
   try {
-    const response = await fetch("https://myquote-app-backend.onrender.com/api/auth/logout",
+    const response = await fetch("https://myquote-app-backend.vercel.app/api/auth/logout",
       {
         method:"POST",
         credentials:"include"

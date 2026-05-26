@@ -6,8 +6,12 @@ function Quotes() {
   const [quotes, setQuotes] = useState([]);
 
   const fetchQuotes = async () => {
-    const response = await fetch("https://myquote-app-backend.onrender.com/api/quotes/getAllQuotes",
+    const response = await fetch("https://myquote-app-backend.vercel.app/api/quotes/getAllQuotes",
       {
+        method:"GET",
+        headers : {
+          "Content-Type":"application/json"
+        },
         credentials : "include"
       }
     );

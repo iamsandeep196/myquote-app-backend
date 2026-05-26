@@ -1,43 +1,56 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom';
+import { Navigate, replace } from 'react-router-dom';
 
 function ProtectedRoute({children}) {
-   
-
-    const [isAuth,setIsAuth] = useState(null);
+    
+    const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
+
         const checkAuth = async () => {
-            try{ 
-                const response = await fetch("https://myquote-app-backend.vercel.app/api/auth/me",
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:3000/api/auth/me",
                     {
-                        method:"GET",
-                        credentials:"include"
-                    });
-                    const data = await response.json();
-
-                    if(data.success){
-                        setIsAuth(true);
-                    }else {
-                        setIsAuth(false);
+                        credentials: "include",
                     }
+                );
 
+                const data = await response.json();
+                console.log(data)
+
+                if(data.success){
+                    setIsAuthenticated(true);
+                   
+                }
+                else{
+                    setIsAuthenticated(false);
+                }
+
+            } catch(error){
+                setIsAuthenticated(false);
             }
-            catch (error){
-                setIsAuth(false);
-
+            finally{
+                setLoading(false);
             }
-            checkAuth();
-        }
-    },[]);
+        };
 
-    if(isAuth === null){
-        return <h1>Loading...</h1>
+        checkAuth();
+
+    }, []);
+
+    if(loading){
+        return <h1>Loading...</h1>;
     }
-    if(!isAuth){
-        return <Navigate to="/login" replace />
+
+    if(!isAuthenticated){
+        return <Navigate to="/login" />;
     }
- return children
+
+    return children;
 }
 
-export default ProtectedRoute
+export default ProtectedRoute;
