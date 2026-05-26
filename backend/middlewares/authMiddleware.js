@@ -8,7 +8,7 @@ const authMiddleware = asyncHandler(async (req,res,next) => {
 
     if(!token) {
         throw new Error(
-            "Token missing"
+            "Login first"
         );
     };
 

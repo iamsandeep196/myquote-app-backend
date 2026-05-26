@@ -97,8 +97,8 @@ exports.loginUser = asyncHandler(async (req,res) => {
 
     res.cookie("token",token,{
         httpOnly:true,
-        secure:true,
-        sameSite:"none"
+        secure:false,
+        sameSite:"lax"
     });
 
     res.status(200).json({
@@ -112,7 +112,11 @@ exports.loginUser = asyncHandler(async (req,res) => {
 
 exports.userLogout = asyncHandler(async (req,res) => {
 
-    res.clearCookie("token");
+    res.clearCookie("token",{
+        httpOnly:true,
+        secure:false,
+        sameSite:"lax"
+    });
     res.status(200).json({
         success:true,
         message:"Logout successfully"
@@ -258,3 +262,11 @@ exports.searchUser = asyncHandler(async (req,res) => {
     });
 
 });
+
+exports.getMe = asyncHandler(async (req,res) => {
+    
+    res.status(200).json({
+        success : true,
+        user: req.userId
+    })
+})
