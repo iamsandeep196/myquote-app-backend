@@ -19,6 +19,21 @@ The project helped me learn:
 
 # Problems Faced & Learnings
 
+## 🐛 Issue: Post Background Image Not Showing
+
+### ❓ Problem
+If the user does not select a background image while creating a post, the post is created successfully but no background image is displayed.
+
+### 🔍 Cause
+The application was not handling cases where the background image field was empty or undefined.
+
+### 💡 Solution
+Implemented a default background image fallback when no image is selected by the user.
+
+```js
+const bgImage = userBackground || defaultBackground;
+
+
 
 - Problem what i have faced during in development
 
