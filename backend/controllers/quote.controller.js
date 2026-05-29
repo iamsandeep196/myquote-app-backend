@@ -1,15 +1,40 @@
 const Quote = require("../models/Quote");
 const asyncHandler = require("../utils/asyncHandler");
 const  imageKit  = require("../config/imagekit");
+const fs = require("fs");
+
+// const buffImage = fs.readFileSync("./public/default.png")
+
 
 
 // CREATE QUOTE
 exports.createQuote = asyncHandler(async (req,res) => {
     // TEXT 
     const { text } = req.body;
-
-
     
+
+
+
+    if(!req.file){
+
+        req.file = {
+            originalname: "default.png",
+            mimetype: "image/png",
+            buffer: fs.readFileSync("./public/default.png")
+        }
+
+
+    }
+
+
+    //  const uploadedImage = await imageKit.upload({
+    //     file:
+    //     req.file.buffer,
+
+    //     fileName :
+    //     req.file.originalname
+
+    // });
 
     // IMAGE UPLOAD
     const uploadedImage = await imageKit.upload({
