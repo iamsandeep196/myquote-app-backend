@@ -169,6 +169,8 @@ exports.toggleFollowing = asyncHandler(async (req,res) => {
         (f) => f.toString() === req.userId.toString()
     );
 
+    const userName = user.name;
+
     // UNFOLLOW
     if(isAlreadyFollowing){
 
@@ -180,7 +182,7 @@ exports.toggleFollowing = asyncHandler(async (req,res) => {
 
         return res.status(200).json({
             success : true,
-            message : "You have unfollowed the user",
+            message : `You have unfollowed ${userName}`,
             followers : user.followers,
             isFollowing : false
         });
@@ -193,9 +195,13 @@ exports.toggleFollowing = asyncHandler(async (req,res) => {
     await user.save();
     await currentUser.save();
 
+    
+
+    
+
     return res.status(200).json({
         success : true,
-        message : "You have started following the user",
+        message : `You have started following ${userName}`,
         followers : user.followers,
         isFollowing : true
     });

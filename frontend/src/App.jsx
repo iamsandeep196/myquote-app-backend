@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Quotes from "./pages/Quotes";
 import ProtectedRoute from "./components/ProtectedRoute";
+import CreatePost from "./components/CreatePost";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -14,9 +15,10 @@ function App() {
       <BrowserRouter>
         <Toaster />
         <Routes>
+          <Route path="create-post" element={<ProtectedRoute> <CreatePost/></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/quotes" element={<ProtectedRoute> <Quotes /></ProtectedRoute>} />
+          <Route path="/quotes" element={<ProtectedRoute> <Quotes /> </ProtectedRoute>} />
           <Route path="/" element={<Hero />} />
 
         </Routes>
