@@ -39,6 +39,7 @@ function Quotes() {
     flex flex-col gap-2 items-center
     bg-base-200 text-base-content">
        <Navbar/>
+       
 
         {
             quotes.map((quote) => (
