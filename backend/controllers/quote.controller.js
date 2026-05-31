@@ -76,12 +76,16 @@ exports.getQuotes = asyncHandler(async (req,res) => {
             select : "name profilePic"
         }
     })
-    .populate("likes","name")
+    .populate("likes","name" )
     .sort({
         createdAt : -1
     });
 
     const updatedQuotes = quotes.map((quote) => {
+
+        const liked = quote.likes.some(
+            (user) => user._id.toString() === req.userId
+        )
 
         const isFollowing = quote.userId.followers.some(
             (f) => f.toString() === req.userId
@@ -89,6 +93,7 @@ exports.getQuotes = asyncHandler(async (req,res) => {
 
         return {
             ...quote._doc,
+            liked,
 
             userId : {
                 ...quote.userId._doc,
@@ -255,18 +260,61 @@ exports.toggleLike = asyncHandler(async (req,res) => {
         return res.status(200).json({
             success : true,
             message : "You have disliked the Quote",
-            likes : quote.likes
+            likes : quote.likes,
+            liked : false
+
         });
     }
+
+
+
+
     // set to like 
     quote.likes.addToSet(req.userId);
     await quote.save();
 
 
+
     res.status(200).json({
         success : true,
         message : "You have liked the Quote",
-        likes : quote.likes
+        likes : quote.likes,
+        liked : true
+        
+       
+    
     });
 
 });
+
+exports.getUserQuotes = asyncHandler(async(req,res) => {
+
+    const { id } = req.params;
+  
+    const userQuotes = await Quote.find({userId: id}).populate("userId","name");
+    const userTotalPosts = await Quote.countDocuments({userId : id});
+
+    if(userTotalPosts === 0){
+        return res.status(200).json({
+            success : true,
+            message : "you have not posted any quote",
+            quotes : userQuotes
+        })
+    }
+
+    if(!userQuotes){
+        return res.status(401)
+        throw new Error(
+            "Quote not found"
+        )
+    }
+
+    res.status(200).json({
+        success : true,
+        quotes : userQuotes
+    })
+
+
+
+
+})
