@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("../utils/asyncHandler");
 const { registerValidation , loginValidation } = require("../validations/user.validation");
+const imageKit = require("../config/imagekit");
 
 
 // REGISTER USER
@@ -275,4 +276,38 @@ exports.getMe = asyncHandler(async (req,res) => {
         success : true,
         user: req.userId
     })
+})
+
+
+// UPDATE PROFILE
+
+exports.updateProfile = asyncHandler(async (req,res) => {
+    
+    const { bio } = req.body;
+
+    const uploadedImage = await imageKit.upload({
+        file :
+        req.file.buffer,
+
+        fileName :
+        req.file.originalname
+    });
+
+    const updatedProfile = await User.findByIdAndUpdate(req.userId,
+        {
+            bio: bio,
+            profilePic : uploadedImage.url
+        },
+        {
+            returnDocument : 'after'
+        }
+    ).select("-password")
+
+    res.status(200).json({
+        success : true,
+        message : "updated successfully",
+        profile : updatedProfile
+    })
+
+    
 })
