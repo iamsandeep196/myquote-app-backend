@@ -4,8 +4,12 @@ import { FaHeart } from "react-icons/fa";
 import { FaComment } from "react-icons/fa";
 import toast from "react-hot-toast";
 
+
 function QuoteCard({ quote }) {
   const [isFollowing, setIsFollowing] = useState(false);
+  const [isLiked,setIsLiked] = useState(quote.liked);
+
+  
 
   useEffect(() => {
     setIsFollowing(quote.userId.isFollowing);
@@ -30,6 +34,36 @@ function QuoteCard({ quote }) {
       return `${minutes}m ago`;
     }
     return `${seconds}s ago`;
+  }
+
+
+
+  const handleLike = async (quoteId) => {
+    try {
+
+      const response = await fetch(`http://localhost:3000/api/quotes/${quoteId}`,
+        {
+          method:"POST",
+          credentials:"include"
+        }
+      )
+
+      const data = await response.json();
+
+      console.log(data)
+     
+
+      if(data.success){
+        toast.success(data.message);
+        setIsLiked(data.liked)
+        
+  
+      }
+
+    }
+    catch (error){
+
+    }
   }
 
   const handleFollow = async (userId) => {
@@ -110,14 +144,18 @@ function QuoteCard({ quote }) {
         <div className="flex items-center gap-5">
           {/* Like */}
 
-          <button className="flex items-center gap-2">
-            ❤️
+          <button className="flex items-center gap-2 cursor-pointer" >
+    
+            <FaHeart className={`cursor-pointer text-xl transition-transform duration-200 ${
+      isLiked ? "text-red-500 scale-125" : "text-white scale-100"
+    }`} onClick={() => handleLike(quote._id)}/>
+            
             <span>{quote.likes.length}</span>
           </button>
 
           {/* Comment */}
           <button className="flex items-center gap-2">
-            💬
+            <FaComment/>
             <span>45</span>
           </button>
         </div>
