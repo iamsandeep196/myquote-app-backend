@@ -272,6 +272,7 @@ exports.searchUser = asyncHandler(async (req,res) => {
 
 exports.getMe = asyncHandler(async (req,res) => {
     
+    const user = await User.find({userId : req.userId})
     res.status(200).json({
         success : true,
         user: req.userId
@@ -283,25 +284,45 @@ exports.getMe = asyncHandler(async (req,res) => {
 
 exports.updateProfile = asyncHandler(async (req,res) => {
     
-    const { bio } = req.body;
+    // const { bio } = req.body;
 
-    const uploadedImage = await imageKit.upload({
+    const updateData = {};
+
+    if(req.body.bio){
+        updateData.bio = req.body.bio;
+    }
+
+    if(req.file){
+        const uploadedImage = await imageKit.upload({
         file :
         req.file.buffer,
 
         fileName :
         req.file.originalname
-    });
+       });
 
-    const updatedProfile = await User.findByIdAndUpdate(req.userId,
-        {
-            bio: bio,
-            profilePic : uploadedImage.url
-        },
+       updateData.profilePic = uploadedImage.url
+    }
+
+   
+    // const uploadedImage = await imageKit.upload({
+    //     file :
+    //     req.file.buffer,
+
+    //     fileName :
+    //     req.file.originalname
+    // });
+
+    const updatedProfile = await User.findByIdAndUpdate(
+        req.userId,
+        updateData
+       ,
         {
             returnDocument : 'after'
         }
     ).select("-password")
+
+    await updatedProfile.save();
 
     res.status(200).json({
         success : true,
@@ -309,5 +330,21 @@ exports.updateProfile = asyncHandler(async (req,res) => {
         profile : updatedProfile
     })
 
-    
+})
+
+// LOGGED IN PROFILE 
+
+exports.getMyProfile = asyncHandler(async (req,res) => {
+
+    const user = await User.findById(req.userId);
+    const myProfile = {
+        user_id : user._id,
+        userBio : user.bio,
+        userProfilePic : user.profilePic
+    }
+
+    res.status(200).json({
+        success: true,
+        profile : myProfile
+    })
 })

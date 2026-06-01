@@ -3,7 +3,7 @@ const { registerUser , loginUser,
     userLogout , getAllUsers ,
     toggleFollowing, getUserFollowing,
     searchUser,getMe ,
-    updateProfile } = require("../controllers/auth.controller");
+    updateProfile, getMyProfile } = require("../controllers/auth.controller");
 
 const upload = require("../middlewares/uploadMiddleware");
 const { authMiddleware } = require("../middlewares/authMiddleware");
@@ -19,6 +19,7 @@ router.get("/following/user/:id",authMiddleware,getUserFollowing);
 router.get("/users/search", authMiddleware ,searchUser);
 router.get("/me",authMiddleware,getMe);
 router.put("/updateprofile",authMiddleware,upload.single("profilepic"),updateProfile);
+router.get("/myprofile",authMiddleware , getMyProfile)
 
 
 module.exports = router;
