@@ -38,7 +38,9 @@ function Quotes() {
     <div data-theme="forest" className="min-h-screen 
     flex flex-col gap-2 items-center
     bg-base-200 text-base-content">
-       <Navbar/>
+       <Navbar />
+
+      
        
 
         {

@@ -1,11 +1,34 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { useEffect } from "react"
 
 
 
-function Navbar() {
+function Navbar({quote}) {
   const navigate = useNavigate();
+
+  const [user , setUser] = useState(null);
+
+  useEffect(() => {
+    
+    const getUser = async () => {
+      const res = await fetch("http://localhost:3000/api/auth/myprofile",
+        {
+          method:"GET",
+          credentials: "include"
+        }
+      )
+      const data = await res.json();
+      console.log(data)
+      setUser(data.profile.userProfilePic)
+      console.log(user)
+    }
+
+    getUser();
+
+  },[])
 
 
 async function handleLogout(){
@@ -61,7 +84,7 @@ async function handleLogout(){
               <div className="w-10 rounded-full">
                 <img
                   alt="profile"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src={user || "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"}
                 />
               </div>
             </div>
