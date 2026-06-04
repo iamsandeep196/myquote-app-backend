@@ -3,16 +3,16 @@ const { registerUser , loginUser,
     userLogout , getAllUsers ,
     toggleFollowing, getUserFollowing,
     searchUser,getMe ,
-    updateProfile, getMyProfile } = require("../controllers/auth.controller");
+    updateProfile, getMyProfile ,removeProfilePic} = require("../controllers/auth.controller");
 
 const upload = require("../middlewares/uploadMiddleware");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
-// authRoutes
+// AUTHROUTES
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post("/logout",userLogout);
+router.post("/logout",authMiddleware ,userLogout);
 router.post("/follow/user/:id", authMiddleware ,toggleFollowing);
 router.get("/users",getAllUsers);
 router.get("/following/user/:id",authMiddleware,getUserFollowing);
@@ -20,6 +20,7 @@ router.get("/users/search", authMiddleware ,searchUser);
 router.get("/me",authMiddleware,getMe);
 router.put("/updateprofile",authMiddleware,upload.single("profilepic"),updateProfile);
 router.get("/myprofile",authMiddleware , getMyProfile)
+router.put("/removepic",authMiddleware,upload.single("profilepic"),removeProfilePic)
 
 
 module.exports = router;

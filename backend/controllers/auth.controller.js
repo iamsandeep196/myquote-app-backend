@@ -48,9 +48,7 @@ exports.registerUser = asyncHandler( async (req,res) => {
         user : userData
     });
 });
-
 // LOGIN USER 
-
 exports.loginUser = asyncHandler(async (req,res) => {
 
     const { error } = loginValidation.validate(req.body);
@@ -109,8 +107,7 @@ exports.loginUser = asyncHandler(async (req,res) => {
 
 
 });
-
-
+// LOGUT USER
 exports.userLogout = asyncHandler(async (req,res) => {
 
     res.clearCookie("token",{
@@ -123,10 +120,7 @@ exports.userLogout = asyncHandler(async (req,res) => {
         message:"Logout successfully"
     });
 });
-
-
-
-// get all users
+// GET ALL USERS
 exports.getAllUsers = asyncHandler(async (req,res) => {
 
 
@@ -144,7 +138,7 @@ exports.getAllUsers = asyncHandler(async (req,res) => {
     })
 
 })
-
+// TOGGLE FOLLOWING
 exports.toggleFollowing = asyncHandler(async (req,res) => {
 
     const { id } = req.params;
@@ -210,7 +204,7 @@ exports.toggleFollowing = asyncHandler(async (req,res) => {
    
 
 });
-
+// GET USER FOLLOWING
 exports.getUserFollowing = asyncHandler(async (req,res) => {
     
     const user = await User.findById(req.userId).select("name email following")
@@ -243,7 +237,7 @@ exports.getUserFollowing = asyncHandler(async (req,res) => {
     });   
 
 });
-
+// SEARCH USER
 exports.searchUser = asyncHandler(async (req,res) => {
 
     const keyword = req.query.name;
@@ -269,7 +263,7 @@ exports.searchUser = asyncHandler(async (req,res) => {
     });
 
 });
-
+// GET ME
 exports.getMe = asyncHandler(async (req,res) => {
     
     const user = await User.find({userId : req.userId})
@@ -278,13 +272,16 @@ exports.getMe = asyncHandler(async (req,res) => {
         user: req.userId
     })
 })
-
-
 // UPDATE PROFILE
-
 exports.updateProfile = asyncHandler(async (req,res) => {
     
     // const { bio } = req.body;
+    const user = await User.findById(req.userId);
+
+    if(user.profilePicFileId){
+        await imageKit.deleteFile(user.profilePicFileId)
+    }
+
 
     const updateData = {};
 
@@ -301,7 +298,8 @@ exports.updateProfile = asyncHandler(async (req,res) => {
         req.file.originalname
        });
 
-       updateData.profilePic = uploadedImage.url
+       updateData.profilePic = uploadedImage.url;
+       updateData.profilePicFileId = uploadedImage.fileId
     }
 
    
@@ -331,20 +329,58 @@ exports.updateProfile = asyncHandler(async (req,res) => {
     })
 
 })
-
 // LOGGED IN PROFILE 
-
 exports.getMyProfile = asyncHandler(async (req,res) => {
 
     const user = await User.findById(req.userId);
     const myProfile = {
         user_id : user._id,
         userBio : user.bio,
-        userProfilePic : user.profilePic
+        userProfilePic : user.profilePic,
+        userProfilePicFileId : user.profilePicFileId
     }
 
     res.status(200).json({
         success: true,
         profile : myProfile
     })
+})
+// REMOVE PROFILEPIC
+exports.removeProfilePic = asyncHandler(async (req,res) => { 
+
+    const user = await User.findById(req.userId);
+
+    if(user.profilePic === ""){
+        return res.status(404).json({
+            success : false,
+            message : "Profile pic already removed"
+        })
+    }
+
+    if(!user) {
+        return res.status(404).json({
+            success : false,
+            message : "User not found"
+        })
+    }
+    const removeProfilePic = await User.findByIdAndUpdate(
+        req.userId,
+        {
+            $unset : {
+                profilePic : "",
+                profilePicFileId : ""
+            }
+        }
+    );
+
+    await imageKit.deleteFile(user.profilePicFileId);
+
+    await user.save();
+
+    res.status(200).json({
+        success : true,
+        message : "profile pic deleted"
+    })
+     
+
 })

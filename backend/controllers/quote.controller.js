@@ -2,6 +2,7 @@ const Quote = require("../models/Quote");
 const asyncHandler = require("../utils/asyncHandler");
 const  imageKit  = require("../config/imagekit");
 const fs = require("fs");
+const ImageKit = require("imagekit");
 
 // const buffImage = fs.readFileSync("./public/default.png")
 
@@ -52,6 +53,7 @@ exports.createQuote = asyncHandler(async (req,res) => {
     const quote = await Quote.create({
         text,
         backgroundImage:uploadedImage.url,
+        backgroundImageFileId:uploadedImage.fileId,
         userId : req.userId
     });
   
@@ -157,7 +159,9 @@ exports.deleteQuote = asyncHandler(async (req,res) => {
             "Unauthorized"
         )
     }
+    await imageKit.deleteFile(quote.backgroundImageFileId);
     await quote.deleteOne();
+
 
     res.status(200).json({
         success : true,

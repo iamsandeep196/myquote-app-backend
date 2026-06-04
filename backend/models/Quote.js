@@ -12,6 +12,9 @@ const quoteSchema = new mongoose.Schema({
         type : String,
         default : ""
     },
+    backgroundImageFileId : {
+        type : String
+    },
     userId : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "User"
