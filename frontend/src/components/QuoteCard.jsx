@@ -102,7 +102,7 @@ function QuoteCard({ quote }) {
           {/* Profile Image */}
           <div className="avatar">
             <div className="w-12 rounded-full">
-              <img src={quote.userId.profilePic || "https://i.pravatar.cc/150?img=12"} alt="user" />
+              <img src={quote.userId.profilePic || "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"} alt="user" />
             </div>
           </div>
 

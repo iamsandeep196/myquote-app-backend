@@ -61,7 +61,7 @@ async function handleLogout(){
 
   return (
     <>
-      <div className="navbar bg-success shadow-sm sticky top-0 z-50 px-4">
+      <div data-theme="forest" className="navbar shadow-sm sticky top-0 z-50 px-4">
         {/* Left */}
         <div className="flex-1">
           <a className="btn btn-ghost text-xl font-bold">MyQuote</a>
