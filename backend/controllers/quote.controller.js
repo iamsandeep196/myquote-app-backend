@@ -172,7 +172,7 @@ exports.deleteQuote = asyncHandler(async (req,res) => {
 // GET USER QUOTE
 exports.getUserQuote = asyncHandler(async (req,res) => {
     
-    const userQuotes = await Quote.find({userId:req.userId});
+    const userQuotes = await Quote.find({userId:req.userId}).sort({createdAt : -1});
     const totalUserQuotes = await Quote.countDocuments({userId:req.userId});
     
     if(!userQuotes){

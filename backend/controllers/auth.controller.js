@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("../utils/asyncHandler");
 const { registerValidation , loginValidation } = require("../validations/user.validation");
 const imageKit = require("../config/imagekit");
+const Quote = require("../models/Quote");
 
 
 // REGISTER USER
@@ -335,6 +336,7 @@ exports.getMyProfile = asyncHandler(async (req,res) => {
     const user = await User.findById(req.userId);
     const myProfile = {
         user_id : user._id,
+        userName : user.name,
         userBio : user.bio,
         userProfilePic : user.profilePic,
         userProfilePicFileId : user.profilePicFileId
@@ -383,4 +385,37 @@ exports.removeProfilePic = asyncHandler(async (req,res) => {
     })
      
 
+})
+
+// GETTING USER PROFILE
+exports.getUserProfile = asyncHandler(async(req,res) => {
+    const { id } = req.params;
+
+    const user = await User.findById(id)
+    .select("name bio profilePic followers following").sort({createdAt : -1})
+    const totalPosts = await Quote.countDocuments({
+        userId : id
+    });
+    
+    const userQuotes = await Quote.find({userId : id});
+
+    if(!user){
+        throw new Error("User not found");
+    }
+
+    const userData = {
+        userProfile : user.profilePic,
+        username : user.name,
+        userBio : user.bio,
+        userFollowers : user.followers.length,
+        userFollowings : user.following.length,
+        userPosts : totalPosts,
+        userQuotes : userQuotes
+    }
+
+    res.status(200).json({
+        success : true,
+        userData
+
+    });
 })
