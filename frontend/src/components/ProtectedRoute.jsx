@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, replace } from 'react-router-dom';
+import { Navigate, Outlet, replace } from 'react-router-dom';
 import Loader from './Loader';
 import toast from "react-hot-toast"
 
-function ProtectedRoute({children}) {
+function ProtectedRoute() {
     
      const [isAuth, setIsAuth] = useState(null);
 
@@ -47,7 +47,7 @@ function ProtectedRoute({children}) {
         return  <Navigate to="/login" replace /> 
     }
 
-    return children;
+    return <Outlet/>;
 }
 
 export default ProtectedRoute;

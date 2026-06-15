@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react"
 
@@ -94,7 +95,7 @@ async function handleLogout(){
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a>Profile</a>
+                <Link to={"/profile"}> Profile </Link>
               </li>
 
               <li>
@@ -115,16 +116,16 @@ async function handleLogout(){
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-1 p-3 shadow bg-base-100 rounded-box w-52 right-0"
             >
-              <li className="mb-2">
+              {/* <li className="mb-2">
                 <input
                   type="text"
                   placeholder="Search"
                   className="input input-bordered w-full"
                 />
-              </li>
+              </li> */}
 
               <li>
-                <a>Profile</a>
+                <Link to={"/profile"}>Profile</Link>
               </li>
 
               <li>

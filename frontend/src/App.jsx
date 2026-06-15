@@ -7,6 +7,8 @@ import Login from "./pages/Login";
 import Quotes from "./pages/Quotes";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreatePost from "./components/CreatePost";
+import ProfilePage from "./pages/ProfilePage";
+import PageNotFound from "./pages/PageNotFound";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -14,13 +16,20 @@ function App() {
     <>
       <BrowserRouter>
         <Toaster />
+        
         <Routes>
-          <Route path="create-post" element={<ProtectedRoute> <CreatePost/></ProtectedRoute>} />
+           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/quotes" element={<ProtectedRoute> <Quotes /> </ProtectedRoute>} />
           <Route path="/" element={<Hero />} />
 
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+           <Route path="/quotes" element={<Quotes/>} />
+           <Route path="/profile" element={<ProfilePage/>} />
+           <Route path="/create-post" element={<CreatePost/>} />
+           <Route path="*" element={<PageNotFound />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
