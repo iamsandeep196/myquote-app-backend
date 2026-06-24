@@ -334,12 +334,16 @@ exports.updateProfile = asyncHandler(async (req,res) => {
 exports.getMyProfile = asyncHandler(async (req,res) => {
 
     const user = await User.findById(req.userId);
+    const totalPosts = await Quote.countDocuments({userId:req.userId});
     const myProfile = {
         user_id : user._id,
         userName : user.name,
         userBio : user.bio,
+        userFollowers : user.followers.length,
+        userFollowings : user.following.length,
         userProfilePic : user.profilePic,
-        userProfilePicFileId : user.profilePicFileId
+        userProfilePicFileId : user.profilePicFileId,
+        userPosts : totalPosts
     }
 
     res.status(200).json({
@@ -410,7 +414,8 @@ exports.getUserProfile = asyncHandler(async(req,res) => {
         userFollowers : user.followers.length,
         userFollowings : user.following.length,
         userPosts : totalPosts,
-        userQuotes : userQuotes
+        userQuotes : userQuotes,
+        userId : id
     }
 
     res.status(200).json({
