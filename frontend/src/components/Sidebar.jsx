@@ -1,100 +1,113 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  FaHome,
-  FaPlus,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaHome, FaPlus, FaSignOutAlt } from "react-icons/fa";
+import { IoHomeOutline } from "react-icons/io5";
+import { IoMdNotifications } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { HomeIcon } from "lucide-react";
+
 
 function Sidebar() {
+  const [userData,setUserData] = useState(null);
 
-   const user = {
-    name: "Vikash",
-    bio: "Fashion Designer",
-    profilePic:
-      "https://ik.imagekit.io/jqykinrd5/tanjiro_9A3qEXQql.jpg",
-    posts: 24,
-    followers: 120,
-    following: 80,
-  };
+  useEffect(() => {
+
+    const fetchUser = async () => {
+      const response = await fetch("http://localhost:3000/api/auth/myprofile",
+        {
+          method : "GET",
+          headers : {
+            "Content-Type":"application/json"
+          },
+          credentials : "include"
+        }
+      )
+
+      const data = await response.json();
+      // console.log(data);
+      setUserData(data.profile);
+      // console.log("After set ",userData);
+    
+      
+    }
+    fetchUser();
+  },[])
+
+  useEffect(()=>{
+    // console.log("check " , userData)
+  },[userData])
+
+
+
+
+
 
   return (
     <>
-    <div
-  className="
+      <div
+        className="
     w-full
-    sm:w-80
-    lg:w-72
-    bg-base-300
-    p-5
-    border-r
-    border-base-content/10
+    min-h-screen
+    bg-base-200
+    p-6
+    flex flex-col
   "
->
-  {/* Profile */}
-  <div className="flex flex-col items-center">
-    <img
-      src={user.profilePic}
-      alt="profile"
-      className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-4 border-primary"
-    />
+      >
+        {/* Profile */}
+        <div className="flex flex-col items-center">
+          <div className="avatar">
+            <div className="w-24 rounded-full ring ring-primary ring-offset-base-200 ring-offset-2">
+              <img
+                src={userData?.userProfilePic || "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"}
+                alt="profile"
+              />
+            </div>
+          </div>
 
-    <h2 className="mt-3 text-lg md:text-xl font-bold">
-      {user.name}
-    </h2>
+          <h2 className="mt-4 text-2xl font-bold ">{userData?.userName}</h2>
 
-    <p className="text-sm opacity-70 text-center">
-      {user.bio}
-    </p>
-  </div>
+          <p className="text-sm text-center opacity-70 mt-1">{userData?.userBio}</p>
+        </div>
 
-  {/* Stats */}
-  <div className="grid grid-cols-3 gap-2 mt-6 text-center">
-    <div className="bg-base-200 rounded-lg p-2">
-      <h3 className="font-bold">{user.posts}</h3>
-      <p className="text-xs">Posts</p>
-    </div>
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-3 mt-8">
+          <div className="bg-base-300 rounded-xl p-3 text-center">
+            <h3 className="font-bold text-lg">{userData?.userPosts}</h3>
+            <p className="text-xs opacity-70">Posts</p>
+          </div>
 
-    <div className="bg-base-200 rounded-lg p-2">
-      <h3 className="font-bold">{user.followers}</h3>
-      <p className="text-xs">Followers</p>
-    </div>
+          <div className="bg-base-300 rounded-xl p-3 text-center">
+            <h3 className="font-bold text-lg">{userData?.userFollowers}</h3>
+            <p className="text-xs opacity-70">Followers</p>
+          </div>
 
-    <div className="bg-base-200 rounded-lg p-2">
-      <h3 className="font-bold">{user.following}</h3>
-      <p className="text-xs">Following</p>
-    </div>
-  </div>
+          <div className="bg-base-300 rounded-xl p-3 text-center">
+            <h3 className="font-bold text-lg">{userData?.userFollowings}</h3>
+            <p className="text-xs opacity-70">Following</p>
+          </div>
+        </div>
 
-  {/* Menu */}
-  <div className="mt-8 flex flex-col gap-3">
-    <Link
-      to="/"
-      className="btn btn-ghost justify-start"
-    >
-      <FaHome />
-      Home
-    </Link>
+        {/* Menu */}
+        <div className="mt-10 flex flex-row gap-3">
+          <Link to={`/profile/${userData?.user_id}`} className="btn btn-ghost justify-start">
+            <CgProfile />
+            Profile
+          </Link>
 
-    <Link
-      to="/create"
-      className="btn btn-primary"
-    >
-      <FaPlus />
-      Create Post
-    </Link>
-  </div>
+          <Link to="/create-post" className="btn btn-ghost justify-start">
+            <FaPlus />
+            Create Post
+          </Link>
 
-  {/* Logout */}
-  <div className="mt-8">
-    <button className="btn btn-error w-full">
-      <FaSignOutAlt />
-      Logout
-    </button>
-  </div>
-</div>
+          <Link to="/create-post" className="btn btn-ghost justify-start">
+            <FaHome />
+            Home
+            
+          </Link>
+        </div>
+      </div>
     </>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;

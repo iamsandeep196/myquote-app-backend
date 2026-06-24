@@ -22,9 +22,9 @@ function Navbar({quote}) {
         }
       )
       const data = await res.json();
-      console.log(data)
+      // console.log(data)
       setUser(data.profile.userProfilePic)
-      console.log(user)
+      // console.log(user)
     }
 
     getUser();

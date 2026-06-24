@@ -26,7 +26,7 @@ function App() {
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
            <Route path="/quotes" element={<Quotes/>} />
-           <Route path="/profile" element={<ProfilePage/>} />
+           <Route path="/profile/:id" element={<ProfilePage/>} />
            <Route path="/create-post" element={<CreatePost/>} />
            <Route path="*" element={<PageNotFound />} />
           </Route>

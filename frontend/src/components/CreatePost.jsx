@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function CreatePost() {
 
@@ -49,8 +50,6 @@ function CreatePost() {
 
             const data = await response.json();
 
-            console.log(data);
-
             if(data.success){
                 toast.success(data.message)
                 setFormData({
@@ -64,7 +63,6 @@ function CreatePost() {
 
         }
         catch(error){
-            console.error(error.message);
             toast.error(data.error);
 
         }
@@ -73,36 +71,45 @@ function CreatePost() {
 
 
   return (
-    <div
-      data-theme="forest"
-      className="min-h-screen flex justify-center items-center bg-base-200 px-4"
-    >
-      <div className="w-full max-w-md bg-base-100 p-6 sm:p-8 rounded-2xl shadow-xl">
-        <h1 className="text-2xl sm:text-3xl font-bold text-center text-base-content">
-          Create New Post
-        </h1>
+    <>
+     <Navbar />
 
-        <div className="mt-8 flex flex-col gap-5">
-          <textarea
-            name="quote"
-            value={formData.quote}
-            onChange={handleChange}
-            className="textarea textarea-bordered w-full h-32 resize-none"
-            placeholder="Write your Quote here..."
-          ></textarea>
+  <div
+    data-theme="forest"
+    className="h-[calc(100vh-64px)] flex justify-center items-center bg-base-200 px-4 overflow-hidden"
+  >
+    <div className="w-full max-w-md bg-base-100 p-6 sm:p-8 rounded-2xl shadow-xl">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center">
+        Create New Post
+      </h1>
 
-          <input
-            ref={fileInputRef}
-            name="backgroundImage"
-            onChange={handleChange}
-            type="file"
-            className="file-input file-input-bordered w-full"
-          />
+      <div className="mt-8 flex flex-col gap-5">
+        <textarea
+          name="quote"
+          value={formData.quote}
+          onChange={handleChange}
+          className="textarea textarea-bordered w-full h-32 resize-none"
+          placeholder="Write your Quote here..."
+        />
 
-          <button onClick={handleSubmit} className="btn btn-neutral w-full">Create Post</button>
-        </div>
+        <input
+          ref={fileInputRef}
+          name="backgroundImage"
+          onChange={handleChange}
+          type="file"
+          className="file-input file-input-bordered w-full"
+        />
+
+        <button
+          onClick={handleSubmit}
+          className="btn btn-neutral w-full"
+        >
+          Create Post
+        </button>
       </div>
     </div>
+  </div>
+    </>
   );
 }
 

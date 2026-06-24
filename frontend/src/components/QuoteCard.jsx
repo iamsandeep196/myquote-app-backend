@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FaComment } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 
@@ -108,7 +109,12 @@ function QuoteCard({ quote }) {
 
           {/* User Name */}
           <div>
-            <h2 className="font-bold text-base">{quote.userId.name}</h2>
+            <h2 className="font-bold text-base">
+              <Link to={`/profile/${quote.userId._id}`}>
+              {quote.userId.name}
+              </Link>
+            
+            </h2>
 
             <p className="text-xs opacity-70">{timeAgo(quote.createdAt)}</p>
           </div>
@@ -116,7 +122,7 @@ function QuoteCard({ quote }) {
 
         {/* Follow Button */}
         <button
-          className="btn btn-neutral btn-sm"
+          className="btn btn-neutral btn-sm rounded-b-md btn-outline"
           onClick={() => handleFollow(quote.userId._id)}
         >
           {isFollowing ? "Following" : "Follow"}
