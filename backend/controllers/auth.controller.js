@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("../utils/asyncHandler");
 const { registerValidation , loginValidation } = require("../validations/user.validation");
@@ -423,4 +425,72 @@ exports.getUserProfile = asyncHandler(async(req,res) => {
         userData
 
     });
+})
+
+// FORGOT PASSWORD 
+exports.forgotPassword = asyncHandler(async(req,res) => {
+    const { email } = req.body;
+
+    const user = await User.findOne({email});
+
+    if(!user){
+        throw new Error (
+            "User not found"
+        )
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+
+    user.resetPasswordToken = token;
+    user.resetPasswordExpire = Date.now()+15*60*1000;
+    await user.save();
+
+    const resetUrl = `http://localhost:3000/api/auth/reset-password/${token}`;
+
+    await sendEmail({
+        email:user.email,
+        subject:"Reset Password",
+        html:`
+        <h2>Reset Password</h2>
+
+        <p>Click below link</p>
+        <a href="${resetUrl}">"${resetUrl}"</a>
+        
+        `
+    })
+
+    res.status(200).json({
+        success:true,
+        message:"Reset email sent",
+        reset_link:resetUrl
+    })
+
+})
+
+// RESET PASSWORD 
+exports.resetPassword = asyncHandler(async(req,res) => {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const user = await User.findOne({
+        resetPasswordToken:token,
+        resetPasswordExpire:{$gt:Date.now()}
+    })
+
+    if(!user) {
+        throw new Error(
+            "Token Expired"
+        )
+    }
+
+    user.password = await bcrypt.hash(password,10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    res.status(200).json({
+        success:true,
+        message:"Password has been updated!"
+    })
 })
