@@ -5,6 +5,7 @@ const  quoteRoute  = require("./routes/quote.routes");
 const commentRoute = require("./routes/comment.routes");
 const  errorMiddleware  = require("./middlewares/errorMiddleware");
 const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 connectDB();
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 const PORT = process.env.PORT || 5000;
 app.use(express.static("public"));
+// app.use(morgan('dev'));
 
 app.use(cors({
     origin :"http://localhost:5173",

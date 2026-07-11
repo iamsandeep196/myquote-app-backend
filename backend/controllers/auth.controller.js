@@ -44,6 +44,141 @@ exports.registerUser = asyncHandler( async (req,res) => {
         email : user.email,
         followers : user.followers
     };
+    await sendEmail({
+  email: user.email,
+  subject: "🎉 Welcome to MyQuote",
+  html: `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Welcome to MyQuote</title>
+</head>
+
+<body style="margin:0;padding:0;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 15px;">
+<tr>
+<td align="center">
+
+<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.1);">
+
+<!-- Header -->
+<tr>
+<td align="center" style="background:#14532d;padding:45px 20px;">
+
+<div style="width:80px;height:80px;border-radius:50%;background:#22c55e;color:#fff;font-size:36px;font-weight:bold;line-height:80px;text-align:center;">
+💬
+</div>
+
+<h1 style="margin:20px 0 10px;color:#ffffff;font-size:34px;">
+MyQuote
+</h1>
+
+<p style="margin:0;color:#d1fae5;font-size:16px;">
+Express what you think...
+</p>
+
+</td>
+</tr>
+
+<!-- Body -->
+<tr>
+<td style="padding:45px 35px;color:#333;">
+
+<h2 style="margin-top:0;color:#14532d;">
+Welcome, ${user.name}! 🎉
+</h2>
+
+<p style="font-size:16px;line-height:28px;color:#555;">
+Thank you for joining <strong>MyQuote</strong>.
+Your account has been created successfully.
+</p>
+
+<p style="font-size:16px;line-height:28px;color:#555;">
+Now you can:
+</p>
+
+<table cellpadding="8">
+<tr>
+<td>✅</td>
+<td>Create beautiful quotes</td>
+</tr>
+
+<tr>
+<td>❤️</td>
+<td>Like and comment on quotes</td>
+</tr>
+
+<tr>
+<td>👥</td>
+<td>Follow your favorite creators</td>
+</tr>
+
+<tr>
+<td>🔔</td>
+<td>Receive real-time notifications</td>
+</tr>
+
+<tr>
+<td>🌍</td>
+<td>Share your thoughts with everyone</td>
+</tr>
+</table>
+
+<div style="text-align:center;margin:40px 0;">
+<a href="https://myquote.vercel.app"
+style="
+background:#16a34a;
+color:#ffffff;
+text-decoration:none;
+padding:16px 40px;
+border-radius:8px;
+font-size:17px;
+font-weight:bold;
+display:inline-block;">
+Start Exploring
+</a>
+</div>
+
+<p style="font-size:15px;color:#666;line-height:26px;">
+We're excited to have you in our community.
+Keep sharing inspiring quotes and connect with people around the world.
+</p>
+
+<p style="margin-top:35px;font-size:15px;color:#444;">
+Regards,<br>
+<strong>Team MyQuote 💚</strong>
+</p>
+
+</td>
+</tr>
+
+<!-- Footer -->
+<tr>
+<td align="center" style="background:#f8fafc;padding:25px;">
+
+<p style="margin:0;color:#888;font-size:13px;">
+© ${new Date().getFullYear()} MyQuote. All Rights Reserved.
+</p>
+
+<p style="margin-top:10px;color:#999;font-size:12px;">
+This email was sent because you successfully created a MyQuote account.
+</p>
+
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+`
+});
 
     res.status(201).json({
         success : true,
@@ -434,9 +569,10 @@ exports.forgotPassword = asyncHandler(async(req,res) => {
     const user = await User.findOne({email});
 
     if(!user){
-        throw new Error (
-            "User not found"
-        )
+       return res.status(404).json({
+        success : false,
+        message:"User not found"
+       })
     }
 
     const token = crypto.randomBytes(32).toString("hex");
@@ -445,18 +581,121 @@ exports.forgotPassword = asyncHandler(async(req,res) => {
     user.resetPasswordExpire = Date.now()+15*60*1000;
     await user.save();
 
-    const resetUrl = `http://localhost:3000/api/auth/reset-password/${token}`;
+    const resetUrl = `http://localhost:5173/reset-password/${token}`;
 
     await sendEmail({
         email:user.email,
         subject:"Reset Password",
-        html:`
-        <h2>Reset Password</h2>
+        html:`<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reset Password</title>
+  </head>
+  <body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,Helvetica,sans-serif;">
 
-        <p>Click below link</p>
-        <a href="${resetUrl}">"${resetUrl}"</a>
-        
-        `
+    <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 0;background:#f4f4f4;">
+      <tr>
+        <td align="center">
+
+          <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+
+            <!-- Header -->
+            <tr>
+              <td align="center" style="background:#111827;padding:35px;">
+                <h1 style="color:#ffffff;margin:0;font-size:32px;">
+                  MyQuote
+                </h1>
+                <p style="color:#d1d5db;margin-top:8px;font-size:15px;">
+                  Express what you think...
+                </p>
+              </td>
+            </tr>
+
+            <!-- Body -->
+            <tr>
+              <td style="padding:40px;">
+
+                <h2 style="margin-top:0;color:#111827;">
+                  Reset Your Password
+                </h2>
+
+                <p style="font-size:16px;color:#555;line-height:28px;">
+                  Hi,
+                </p>
+
+                <p style="font-size:16px;color:#555;line-height:28px;">
+                  We received a request to reset your password for your
+                  <strong>MyQuote</strong> account.
+                </p>
+
+                <p style="font-size:16px;color:#555;line-height:28px;">
+                  Click the button below to create a new password.
+                </p>
+
+                <div style="text-align:center;margin:40px 0;">
+                  <a href="${resetUrl}"
+                    style="
+                      background:#2563eb;
+                      color:#ffffff;
+                      padding:16px 40px;
+                      text-decoration:none;
+                      border-radius:10px;
+                      font-size:16px;
+                      font-weight:bold;
+                      display:inline-block;
+                    ">
+                    Reset Password
+                  </a>
+                </div>
+
+                <p style="font-size:14px;color:#777;line-height:24px;">
+                  This password reset link will expire in
+                  <strong>15 minutes</strong>.
+                </p>
+
+                <p style="font-size:14px;color:#777;line-height:24px;">
+                  If the button doesn't work, copy and paste this URL into your browser:
+                </p>
+
+                <p style="word-break:break-all;font-size:13px;color:#2563eb;">
+                  ${resetUrl}
+                </p>
+
+                <hr style="border:none;border-top:1px solid #e5e7eb;margin:35px 0;">
+
+                <p style="font-size:14px;color:#888;">
+                  If you didn't request a password reset, you can safely ignore this email.
+                  Your password will remain unchanged.
+                </p>
+
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td align="center" style="background:#f9fafb;padding:25px;">
+
+                <p style="margin:0;color:#6b7280;font-size:14px;">
+                  © ${new Date().getFullYear()} MyQuote. All Rights Reserved.
+                </p>
+
+                <p style="margin-top:10px;color:#9ca3af;font-size:12px;">
+                  Made with ❤️ by MyQuote Team
+                </p>
+
+              </td>
+            </tr>
+
+          </table>
+
+        </td>
+      </tr>
+    </table>
+
+  </body>
+  </html>
+  `
     })
 
     res.status(200).json({
