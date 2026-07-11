@@ -5,6 +5,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { IoMdNotifications } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { HomeIcon } from "lucide-react";
+import BottomNavbar from "./BottomNavbar";
 
 
 function Sidebar() {
@@ -47,10 +48,10 @@ function Sidebar() {
       <div
         className="
     w-full
-    min-h-screen
     bg-base-200
-    p-6
+    p-4 sm:p-6
     flex flex-col
+    min-w-0
   "
       >
         {/* Profile */}
@@ -104,8 +105,10 @@ function Sidebar() {
             Home
             
           </Link>
+          <BottomNavbar/>
         </div>
       </div>
+     
     </>
   );
 }

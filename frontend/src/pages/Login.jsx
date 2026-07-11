@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa"
@@ -55,6 +56,9 @@ function Login() {
       toast.error(error.data.message);
     }
   }
+  useEffect(() => {
+  document.title = "Login | MyQuote";
+}, []);
 
   return (
     <>

@@ -95,7 +95,7 @@ function QuoteCard({ quote }) {
   return (
     <div
       data-theme="synthwave"
-      className="card bg-base-100 w-96 shadow-2xl border border-base-300"
+      className="card bg-base-100 w-full max-w-sm mx-auto shadow-2xl border border-base-300"
     >
       {/* Top User Info */}
       <div className="flex items-center justify-between p-4">

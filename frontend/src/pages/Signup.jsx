@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -59,6 +59,10 @@ function Signup() {
       toast.error(error.data.message);
     }
   }
+
+  useEffect(() => {
+    document.title = "Signup | MyQuote"
+  })
 
   return (
     <>

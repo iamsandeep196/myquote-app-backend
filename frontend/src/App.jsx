@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CreatePost from "./components/CreatePost";
 import ProfilePage from "./pages/ProfilePage";
 import PageNotFound from "./pages/PageNotFound";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Hero />} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
+          <Route path="/reset-password/:token" element={<ResetPassword/>} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
