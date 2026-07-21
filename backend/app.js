@@ -17,7 +17,7 @@ app.use(express.static("public"));
 
 app.use(cors({
     origin :["http://localhost:5173",
-            "https://myquote-app-backend-beige.vercel.app/"],
+            "https://myquote-app-backend-ten.vercel.app"],
     credentials : true
 }));
 
