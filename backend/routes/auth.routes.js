@@ -5,7 +5,7 @@ const { registerUser , loginUser,
     searchUser,getMe ,
     updateProfile, getMyProfile ,
     removeProfilePic , getUserProfile,
-    forgotPassword, resetPassword
+    forgotPassword, resetPassword, followersLists, followingsLists
 
 } = require("../controllers/auth.controller");
 
@@ -28,6 +28,8 @@ router.put("/removepic",authMiddleware,upload.single("profilepic"),removeProfile
 router.get("/user/profile/:id",getUserProfile);
 router.post("/forgot-password",forgotPassword);
 router.post("/reset-password/:token",resetPassword);
+router.get("/followers/:id",authMiddleware, followersLists);
+router.get("/followings/:id",authMiddleware, followingsLists);
 
 
 module.exports = router;

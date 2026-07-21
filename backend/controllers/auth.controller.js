@@ -733,3 +733,57 @@ exports.resetPassword = asyncHandler(async(req,res) => {
         message:"Password has been updated!"
     })
 })
+
+// FOLLOERS LISTS
+
+exports.followersLists = asyncHandler(async(req,res) => {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+
+    if(!user){
+        throw new Error(
+            "User not found"
+        )
+    }
+
+    if(user.followers.length === 0){
+        return res.status(200).json({
+            success:true,
+            message:"No followers",
+            followers:user.followers.length
+        })
+    }
+
+    res.status(200).json({
+        success:true,
+        message:"followers lists",
+        followers:user.followers
+    })
+
+})
+
+exports.followingsLists = asyncHandler(async(req,res) => {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if(!user) {
+        throw new Error(
+            "User not found"
+        )
+    }
+
+    if(user.following.length === 0){
+        return res.status(200).json({
+            success:true,
+            message: "No Followings",
+            following:user.following.length
+        })
+    }
+
+    res.status(200).json({
+        success:true,
+        message:"followings lists",
+        following:user.following
+    })
+})
