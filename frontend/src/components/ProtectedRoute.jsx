@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, Outlet, replace } from 'react-router-dom';
 import Loader from './Loader';
 import toast from "react-hot-toast"
+import API_URL from '../api/api';
 
 function ProtectedRoute() {
     
@@ -14,7 +15,7 @@ function ProtectedRoute() {
             try {
 
                 const response = await fetch(
-                    "http://localhost:3000/api/auth/me",
+                    `${API_URL}/api/auth/me`,
                     {
                         method: "GET",
                         credentials: "include",

@@ -55,18 +55,10 @@ function ForgotPassword() {
 
 
   return (
-    <div data-theme="forest" className="min-h-screen bg-base-200 flex items-center justify-center px-4">
+     <div data-theme="forest" className="min-h-screen bg-base-200 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          {/* <div className="w-20 h-20 mx-auto rounded-full bg-success/20 flex items-center justify-center border border-success/30">
-            <Mail className="w-10 h-10 text-success" />
-          </div> */}
-
-          <h1 className="text-4xl font-bold mt-5">MyQuote</h1>
-
-          <p className="text-base-content/60 mt-2">Express what you think.</p>
-        </div>
+        
 
         {/* Card */}
         <div className="card bg-base-100 shadow-2xl border border-base-300">

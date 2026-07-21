@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import toast from "react-hot-toast";
 import Sidebar from "../components/Sidebar";
 import BottomNavbar from "../components/BottomNavbar";
+import API_URL from "../api/api";
 
 function Quotes() {
   const [quotes, setQuotes] = useState([]);
@@ -11,7 +12,7 @@ function Quotes() {
 
   const fetchQuotes = async () => {
     const response = await fetch(
-      "http://localhost:3000/api/quotes/getAllQuotes",
+      `${API_URL}/api/quotes/getAllQuotes`,
       {
         method: "GET",
         headers: {

@@ -6,6 +6,7 @@ import { IoMdNotifications } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { HomeIcon } from "lucide-react";
 import BottomNavbar from "./BottomNavbar";
+import API_URL from "../api/api";
 
 
 function Sidebar() {
@@ -14,7 +15,7 @@ function Sidebar() {
   useEffect(() => {
 
     const fetchUser = async () => {
-      const response = await fetch("http://localhost:3000/api/auth/myprofile",
+      const response = await fetch(`${API_URL}/api/auth/myprofile`,
         {
           method : "GET",
           headers : {

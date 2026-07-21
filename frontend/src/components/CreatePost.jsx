@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import BottomNavbar from "./BottomNavbar";
+import API_URL from "../api/api";
 
 function CreatePost() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function CreatePost() {
       sendData.append("text", formData.quote);
       sendData.append("image", formData.backgroundImage);
 
-      const response = await fetch("http://localhost:3000/api/quotes/create", {
+      const response = await fetch(`${API_URL}/api/quotes/create`, {
         method: "POST",
         credentials: "include",
         body: sendData,

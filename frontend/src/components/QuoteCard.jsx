@@ -4,6 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaComment } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import API_URL from "../api/api";
 
 
 function QuoteCard({ quote }) {
@@ -42,7 +43,7 @@ function QuoteCard({ quote }) {
   const handleLike = async (quoteId) => {
     try {
 
-      const response = await fetch(`http://localhost:3000/api/quotes/${quoteId}`,
+      const response = await fetch(`${API_URL}/api/quotes/${quoteId}`,
         {
           method:"POST",
           credentials:"include"
@@ -70,7 +71,7 @@ function QuoteCard({ quote }) {
   const handleFollow = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/auth/follow/user/${userId}`,
+        `${API_URL}/api/auth/follow/user/${userId}`,
 
         {
           method: "POST",

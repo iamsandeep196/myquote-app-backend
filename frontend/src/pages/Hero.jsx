@@ -2,6 +2,7 @@ import React from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import { motion } from "motion/react";
 
 function Hero() {
   return (
@@ -11,12 +12,22 @@ function Hero() {
         className="min-h-screen flex flex-col items-center bg-base-200 text-base-content px-4 sm:px-6 pt-24 sm:pt-28"
       >
         {/* Heading */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide text-center"
+        >
           MyQuote
-          <p className="mt-2 text-sm sm:text-base md:text-lg font-light tracking-normal text-base-content/80">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="mt-2 text-sm sm:text-base md:text-lg font-light tracking-normal text-base-content/80"
+          >
             Express what you think...
-          </p>
-        </h1>
+          </motion.p>
+        </motion.h1>
 
         {/* Description */}
         <p className="text-base-content/70 mt-6 text-center text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">

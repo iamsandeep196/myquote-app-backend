@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import EditModal from "../components/EditModal";
 import BottomNavbar from "../components/BottomNavbar";
+import API_URL from "../api/api";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -17,7 +18,7 @@ function ProfilePage() {
     // document.title = "Profile | MyQuote"
     const fetchLoggedInUser = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/auth/me", {
+        const response = await fetch(`${API_URL}/api/auth/me`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -42,7 +43,7 @@ function ProfilePage() {
       try {
         const fetchUserData = async () => {
           const response = await fetch(
-            `http://localhost:3000/api/auth/user/profile/${id}`,
+            `${API_URL}/api/auth/user/profile/${id}`,
             {
               method: "GET",
               headers: {
@@ -121,7 +122,7 @@ function ProfilePage() {
 
             {
               isOpen && (
-                <EditModal onClose={()=>setIsOpen(false)} />
+                <EditModal onClose={()=>setIsOpen(false)} key={user._id} userData={user} />
               )
             }
 

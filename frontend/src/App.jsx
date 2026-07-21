@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import PageNotFound from "./pages/PageNotFound";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import FollowersModal from "./components/FollowersModal";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Hero />} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
           <Route path="/reset-password/:token" element={<ResetPassword/>} />
+          <Route path="/followers" element={<FollowersModal/>} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>

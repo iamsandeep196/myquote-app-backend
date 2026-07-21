@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Menu } from "lucide-react";
+import API_URL from "../api/api";
 
 function Navbar({ quote }) {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Navbar({ quote }) {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await fetch("http://localhost:3000/api/auth/myprofile", {
+      const res = await fetch(`${API_URL}/api/auth/myprofile`, {
         method: "GET",
         credentials: "include",
       });
@@ -28,7 +29,7 @@ function Navbar({ quote }) {
 
   async function handleLogout() {
     try {
-      const response = await fetch("http://localhost:3000/api/auth/logout", {
+      const response = await fetch(`${API_URL}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

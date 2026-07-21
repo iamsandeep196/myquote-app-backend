@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { House, Search, PlusSquare, Heart, User } from "lucide-react";
 import { Link } from 'react-router-dom';
+import API_URL from '../api/api';
 
 function BottomNavbar() {
 
@@ -11,7 +12,7 @@ function BottomNavbar() {
   const fetchProfile = async () => {
     try {
 
-      const response = await fetch("http://localhost:3000/api/auth/myprofile",
+      const response = await fetch(`${API_URL}/api/auth/myprofile`,
         {
           method:"GET",
           headers : {

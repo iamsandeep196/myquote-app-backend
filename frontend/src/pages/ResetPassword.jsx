@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { FaHeart } from 'react-icons/fa';
+import API_URL from '../api/api';
 function ResetPassword() {
 
     document.title = "Reset Password | MyQuote"
@@ -16,7 +17,7 @@ function ResetPassword() {
         e.preventDefault();
         try {
 
-            const response = await fetch(`http://localhost:3000/api/auth/reset-password/${token}`,
+            const response = await fetch(`${API_URL}/api/auth/reset-password/${token}`,
                 {
                     method:"POST",
                     headers:{
