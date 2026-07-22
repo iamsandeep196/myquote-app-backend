@@ -4,6 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaComment } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import CommentInput from "./CommentInput";
 import API_URL from "../api/api";
 
 
@@ -94,6 +95,7 @@ function QuoteCard({ quote }) {
   };
 
   return (
+    <>
     <div
       data-theme="synthwave"
       className="card bg-base-100 w-full max-w-sm mx-auto shadow-2xl border border-base-300"
@@ -170,7 +172,15 @@ function QuoteCard({ quote }) {
         {/* Share */}
         <button>📤</button>
       </div>
+    
     </div>
+
+    <CommentInput />
+
+
+    </>
+
+  
   );
 }
 

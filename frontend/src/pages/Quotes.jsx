@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import toast from "react-hot-toast";
 import Sidebar from "../components/Sidebar";
 import BottomNavbar from "../components/BottomNavbar";
+import CommentInput from "../components/CommentInput";
 import API_URL from "../api/api";
 
 function Quotes() {

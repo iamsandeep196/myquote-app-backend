@@ -9,6 +9,7 @@ import API_URL from "../api/api";
 
 function Login() {
   const navigate = useNavigate();
+  console.log(API_URL)
 
   const [formData, setFormData] = useState({
     email: "",
