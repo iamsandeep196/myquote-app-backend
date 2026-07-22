@@ -251,8 +251,9 @@ exports.userLogout = asyncHandler(async (req,res) => {
 
     res.clearCookie("token",{
         httpOnly:true,
-        secure:false,
-        sameSite:"lax"
+        secure:true, //false for development and true for production
+        // sameSite:"lax"
+        sameSite:"none"
     });
     res.status(200).json({
         success:true,
